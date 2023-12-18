@@ -54,6 +54,6 @@ public class ApiExceptionHandler {
         log.error("API Error - " + exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, exception.getMessage()));
+                        .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 }

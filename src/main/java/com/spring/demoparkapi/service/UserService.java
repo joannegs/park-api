@@ -39,7 +39,7 @@ public class UserService {
 
         User user = getById(id);
         if(!user.getPassword().equals(currentPassword)) {
-            throw new PasswordInvalidException("Tha password validation did not succeeded");
+            throw new PasswordInvalidException("The password validation did not succeeded");
         }
 
         user.setPassword(updatedPassword);

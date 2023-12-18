@@ -77,7 +77,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
         User user = userService.getById(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(UserMapper.toDto(user));
+        return ResponseEntity.status(HttpStatus.OK).body(UserMapper.toDto(user));
     }
 
     @Operation(summary = "Updates user password",
@@ -100,6 +100,12 @@ public class UserController {
                             description = "Resource was not patched due to incorrect password",
                             content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorMessage.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "422",
+                            description = "Resource was not patched due to invalid data",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorMessage.class))
                     ),
             }
     )
