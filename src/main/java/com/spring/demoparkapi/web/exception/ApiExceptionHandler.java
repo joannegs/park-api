@@ -1,6 +1,7 @@
 package com.spring.demoparkapi.web.exception;
 
 
+import com.spring.demoparkapi.exception.CpfUniqueViolationException;
 import com.spring.demoparkapi.exception.PasswordInvalidException;
 import com.spring.demoparkapi.exception.EntityNotFoundException;
 import com.spring.demoparkapi.exception.UsernameUniqueViolationException;
@@ -32,9 +33,9 @@ public class ApiExceptionHandler {
                         .body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Invalid input", result));
     }
 
-    @ExceptionHandler(UsernameUniqueViolationException.class)
+    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class})
     public ResponseEntity<ErrorMessage>
-    usernameUniqueViolationException(RuntimeException exception, HttpServletRequest request) {
+    uniqueViolationException(RuntimeException exception, HttpServletRequest request) {
         log.error("API Error - " + exception);
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)

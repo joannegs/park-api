@@ -1,0 +1,3 @@
+insert into users (id, username, password, role) values (100, 'ana@gmail.com', '$2a$12$I.gv1eKk0BUH8rA7ZPxone94I6RdKli8NS.eagEYW8OSV18rnIqyy', 'ROLE_ADMIN');
+insert into users (id, username, password, role) values (101, 'bia@gmail.com', '$2a$12$I.gv1eKk0BUH8rA7ZPxone94I6RdKli8NS.eagEYW8OSV18rnIqyy', 'ROLE_CLIENT');
+insert into users (id, username, password, role) values (102, 'bob@gmail.com', '$2a$12$I.gv1eKk0BUH8rA7ZPxone94I6RdKli8NS.eagEYW8OSV18rnIqyy', 'ROLE_CLIENT');

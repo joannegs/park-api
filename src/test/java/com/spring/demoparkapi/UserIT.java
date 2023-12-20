@@ -14,8 +14,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = "/sql/users/users-inserts.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = "/sql/users/users-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(scripts = "/sql/users-inserts.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/users-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserIT {
     @Autowired
     WebTestClient testClient;
@@ -26,7 +26,7 @@ public class UserIT {
                 .post()
                 .uri("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new UserCreateDto("tody@gmail.com", "123456"))
+                .bodyValue(new UserCreateDto("toby@gmail.com", "123456"))
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(UserResponseDto.class)
