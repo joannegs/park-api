@@ -10,12 +10,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,7 +60,8 @@ public class UserController {
     }
 
     @Operation(summary = "Gets a user by id",
-            description = "Resource to get a user by id",
+            security = @SecurityRequirement(name = "security"),
+            description = "Request takes requires a Bearer token. Restricted to Admin or Client",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -72,16 +75,24 @@ public class UserController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorMessage.class))
                     ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Not Authorized",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorMessage.class))
+                    ),
             }
     )
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #id == authentication.principal.id)")
     public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
         User user = userService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(UserMapper.toDto(user));
     }
 
     @Operation(summary = "Updates user password",
-            description = "Resource to update a user's password",
+            security = @SecurityRequirement(name = "security"),
+            description = "Request takes requires a Bearer token. Restricted to Admin or Client",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -107,16 +118,25 @@ public class UserController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorMessage.class))
                     ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Not Authorized",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorMessage.class))
+                    ),
             }
     )
+
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT') AND #id == authentication.principal.id")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDto userPasswordDto) {
         userService.updatePassword(id, userPasswordDto.getCurrentPassword(), userPasswordDto.getUpdatedPassword(), userPasswordDto.getUpdatedPasswordConfirm());
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Gets all users",
-            description = "Resource to get a list containing all user's information",
+    @Operation(summary = "Gets all signup users",
+            security = @SecurityRequirement(name = "security"),
+            description = "Request takes requires a Bearer token. Restricted to Admin",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -130,9 +150,16 @@ public class UserController {
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = ErrorMessage.class))
                     ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Not Authorized",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorMessage.class))
+                    ),
             }
     )
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDto>> getAll() {
         List<User> users = userService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(UserMapper.toListDto(users));
