@@ -21,6 +21,15 @@ import java.nio.file.AccessDeniedException;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorMessage>
+    accessDeniedException(AccessDeniedException exception, HttpServletRequest request) {
+        log.error("API Error - " + exception);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.FORBIDDEN, exception.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage>
     argumentNotValidException(
@@ -60,12 +69,5 @@ public class ApiExceptionHandler {
                         .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorMessage>
-    accessDeniedException(AccessDeniedException exception, HttpServletRequest request) {
-        log.error("API Error - " + exception);
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request, HttpStatus.FORBIDDEN, exception.getMessage()));
-    }
+
 }

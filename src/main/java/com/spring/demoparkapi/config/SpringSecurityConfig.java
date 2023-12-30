@@ -38,14 +38,16 @@ public class SpringSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/auth").permitAll()
                         .requestMatchers(DOCUMENTATION_OPENAPI).permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                 .addFilterBefore(
-                        jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class
-                ).exceptionHandling(exception -> exception.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
+                        jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                // .exceptionHandling(ex -> ex
+                        // .authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
                 .build();
     }
 
