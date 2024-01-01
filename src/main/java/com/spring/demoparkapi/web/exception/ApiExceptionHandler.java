@@ -1,10 +1,7 @@
 package com.spring.demoparkapi.web.exception;
 
 
-import com.spring.demoparkapi.exception.CpfUniqueViolationException;
-import com.spring.demoparkapi.exception.PasswordInvalidException;
-import com.spring.demoparkapi.exception.EntityNotFoundException;
-import com.spring.demoparkapi.exception.UsernameUniqueViolationException;
+import com.spring.demoparkapi.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -42,7 +39,7 @@ public class ApiExceptionHandler {
                         .body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Invalid input", result));
     }
 
-    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class})
+    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class, UniqueCodeViolationException.class})
     public ResponseEntity<ErrorMessage>
     uniqueViolationException(RuntimeException exception, HttpServletRequest request) {
         log.error("API Error - " + exception);
