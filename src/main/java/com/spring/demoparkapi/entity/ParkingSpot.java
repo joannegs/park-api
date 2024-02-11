@@ -52,7 +52,7 @@ public class ParkingSpot implements Serializable {
 
 
     public enum StateParkingSpot {
-        AVALIABLE, TAKEN
+        AVAILABLE, TAKEN
     }
 
     @Override
