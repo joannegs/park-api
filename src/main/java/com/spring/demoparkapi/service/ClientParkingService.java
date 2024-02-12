@@ -49,7 +49,6 @@ public class ClientParkingService {
         clientParkingSpot.setCheckoutDate(checkoutDate);
         clientParkingSpot.getParkingSpot().setStatus(ParkingSpot.StateParkingSpot.AVAILABLE);
 
-        clientParkingSpotService.save(clientParkingSpot);
-
+        return clientParkingSpotService.save(clientParkingSpot);
     }
 }
