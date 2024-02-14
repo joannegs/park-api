@@ -24,6 +24,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
@@ -33,7 +34,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.awt.print.Pageable;
 import java.net.URI;
 
 @RequiredArgsConstructor
@@ -76,7 +76,7 @@ public class ClientParkingController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientParkingResponseDto> checkIn(@RequestBody @Valid ClientParkingCreateDto parkingSpotCreateDto) {
         ClientParkingSpot clientParkingSpot = ClientParkingMapper.toClientParking(parkingSpotCreateDto);
-        clientParkingService.ckeckIn(clientParkingSpot);
+        clientParkingService.checkIn(clientParkingSpot);
         ClientParkingResponseDto response = ClientParkingMapper.toDto(clientParkingSpot);
 
         URI location = ServletUriComponentsBuilder

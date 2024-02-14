@@ -21,7 +21,7 @@ public class ClientParkingService {
     private final ClientParkingSpotRepository clientParkingSpotRepository;
 
     @Transactional
-    public ClientParkingSpot ckeckIn(ClientParkingSpot clientParkingSpot) {
+    public void checkIn(ClientParkingSpot clientParkingSpot) {
         Client client = clientService.findByCpf(clientParkingSpot.getClient().getCpf());
         clientParkingSpot.setClient(client);
 
@@ -31,7 +31,7 @@ public class ClientParkingService {
         clientParkingSpot.setCheckinDate(LocalDateTime.now());
         clientParkingSpot.setReceipt(ClientParkingUtil.generateReceipt());
 
-        return clientParkingSpotRepository.save(clientParkingSpot);
+        clientParkingSpotRepository.save(clientParkingSpot);
     }
 
     @Transactional

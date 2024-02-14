@@ -84,7 +84,7 @@ public class UserController {
             }
     )
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') OR (hasRole('CLIENT') AND #id == authentication.principal.id)")
+    @PreAuthorize("hasRole('ADMIN') OR ((hasRole('CLIENT') AND #id == authentication.principal.id))")
     public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
         User user = userService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(UserMapper.toDto(user));

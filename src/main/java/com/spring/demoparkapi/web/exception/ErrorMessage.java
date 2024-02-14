@@ -25,6 +25,9 @@ public class ErrorMessage {
     public ErrorMessage() {}
 
     public ErrorMessage(HttpServletRequest request, HttpStatus status, String message) {
+        System.out.println(
+                "alskdjaslj"
+        );
         this.path = request.getRequestURI();
         this.method = request.getMethod();
         this.status = status.value();
@@ -41,7 +44,6 @@ public class ErrorMessage {
 
         addErrors(result);
     }
-
 
     private void addErrors(BindingResult result) {
         this.errors = new HashMap<>();
