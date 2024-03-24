@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "clients_have_parkingspots")
+@Table(name = "clients_have_parking_spots")
 @EntityListeners(AuditingEntityListener.class)
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -29,16 +29,16 @@ public class ClientParkingSpot {
     @Column(name = "receipt_number", nullable = false, unique = true, length = 15)
     private String receipt;
 
-    @Column(name = "veihicle_registration", nullable = false, length = 8)
+    @Column(name = "vehicle_registration", nullable = false, length = 8)
     private String vehicleRegistration;
 
-    @Column(name = "veihicle_brand", nullable = false, length = 45)
+    @Column(name = "vehicle_brand", nullable = false, length = 45)
     private String vehicleBrand;
 
-    @Column(name = "veihicle_model", nullable = false, length = 45)
+    @Column(name = "vehicle_model", nullable = false, length = 45)
     private String vehicleModel;
 
-    @Column(name = "veihicle_color", nullable = false, length = 45)
+    @Column(name = "vehicle_color", nullable = false, length = 45)
     private String vehicleColor;
 
     @Column(name = "checkin_date", nullable = false)
@@ -47,8 +47,8 @@ public class ClientParkingSpot {
     @Column(name = "checkout_date")
     private LocalDateTime checkoutDate;
 
-    @Column(name = "value", columnDefinition = "decimal(7,2)")
-    private BigDecimal value;
+    @Column(name = "price", columnDefinition = "decimal(7,2)")
+    private BigDecimal price;
 
     @Column(name = "discount", columnDefinition = "decimal(7,2)")
     private BigDecimal discount;

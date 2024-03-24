@@ -39,12 +39,12 @@ public class ClientParkingService {
         ClientParkingSpot clientParkingSpot = clientParkingSpotService.getByReceipt(receipt);
         LocalDateTime checkoutDate = LocalDateTime.now();
 
-        BigDecimal value = ClientParkingUtil.calculateParkingPrice(clientParkingSpot.getCheckinDate(), checkoutDate);
-        clientParkingSpot.setValue(value);
+        BigDecimal price = ClientParkingUtil.calculateParkingPrice(clientParkingSpot.getCheckinDate(), checkoutDate);
+        clientParkingSpot.setPrice(price);
 
         long times = clientParkingSpotService.getParkingTimes(clientParkingSpot.getClient().getCpf());
 
-        BigDecimal discount = ClientParkingUtil.calculateDiscount(value, times);
+        BigDecimal discount = ClientParkingUtil.calculateDiscount(price, times);
         clientParkingSpot.setDiscount(discount);
         clientParkingSpot.setCheckoutDate(checkoutDate);
         clientParkingSpot.getParkingSpot().setStatus(ParkingSpot.StateParkingSpot.AVAILABLE);

@@ -2,14 +2,11 @@ package com.spring.demoparkapi.web.controller;
 
 import com.spring.demoparkapi.entity.ClientParkingSpot;
 import com.spring.demoparkapi.jwt.JwtUserDetails;
-import com.spring.demoparkapi.repository.projection.ParkingClientProjection;
 import com.spring.demoparkapi.service.ClientParkingService;
 import com.spring.demoparkapi.service.ClientParkingSpotService;
-import com.spring.demoparkapi.service.ParkingSpotService;
 import com.spring.demoparkapi.web.dto.ClientParkingCreateDto;
 import com.spring.demoparkapi.web.dto.ClientParkingResponseDto;
 import com.spring.demoparkapi.web.dto.PageableDto;
-import com.spring.demoparkapi.web.dto.ParkingSpotResponseDto;
 import com.spring.demoparkapi.web.dto.mapper.ClientParkingMapper;
 import com.spring.demoparkapi.web.dto.mapper.PageableMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -165,7 +162,7 @@ public class ClientParkingController {
     public ResponseEntity<PageableDto> getAllClientParkingByCpf(@PathVariable String cpf,
                                                            @PageableDefault(size = 5, sort = "checkinDate",
                                                            direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<ParkingClientProjection> projection = clientParkingSpotService.getAllByClientCpf(cpf, pageable);
+        Page<ClientParkingSpot> projection = clientParkingSpotService.getAllByClientCpf(cpf, pageable);
         PageableDto dto = PageableMapper.toDto(projection);
         return ResponseEntity.ok(dto);
     }
@@ -175,7 +172,7 @@ public class ClientParkingController {
     public ResponseEntity<PageableDto> getAllClientParking(@AuthenticationPrincipal JwtUserDetails user,
                                                            @PageableDefault(size = 5, sort = "checkinDate",
                                                                    direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<ParkingClientProjection> projection = clientParkingSpotService.getAllByClientId(user.getId(), pageable);
+        Page<ClientParkingSpot> projection = clientParkingSpotService.getAllByClientId(user.getId(), pageable);
         PageableDto dto = PageableMapper.toDto(projection);
         return ResponseEntity.ok(dto);
     }

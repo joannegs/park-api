@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -24,12 +25,12 @@ public class ClientParkingResponseDto {
     private String receipt;
 
     @JsonFormat(pattern = "yyy-MM-dd hh:mm:ss")
-    private LocalDate checkinDate;
+    private LocalDateTime checkinDate;
 
     @JsonFormat(pattern = "yyy-MM-dd hh:mm:ss")
-    private LocalDate checkoutDate;
+    private LocalDateTime checkoutDate;
     private String parkingSpotCode;
-    private BigDecimal value;
+    private BigDecimal price;
     private BigDecimal discount;
 
 }

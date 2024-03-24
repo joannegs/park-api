@@ -3,7 +3,6 @@ package com.spring.demoparkapi.service;
 import com.spring.demoparkapi.entity.ClientParkingSpot;
 import com.spring.demoparkapi.exception.EntityNotFoundException;
 import com.spring.demoparkapi.repository.ClientParkingSpotRepository;
-import com.spring.demoparkapi.repository.projection.ParkingClientProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,12 +35,12 @@ public class ClientParkingSpotService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ParkingClientProjection> getAllByClientCpf(String cpf, Pageable pageable) {
+    public Page<ClientParkingSpot> getAllByClientCpf(String cpf, Pageable pageable) {
         return clientParkingRepository.findAllByClientCpf(cpf, pageable);
     }
 
     @Transactional(readOnly = true)
-    public Page<ParkingClientProjection> getAllByClientId(Long id, Pageable pageable) {
+    public Page<ClientParkingSpot> getAllByClientId(Long id, Pageable pageable) {
         return clientParkingRepository.findAllByClientId(id, pageable);
     }
 }

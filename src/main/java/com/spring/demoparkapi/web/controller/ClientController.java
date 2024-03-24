@@ -106,7 +106,7 @@ public class ClientController {
                     ),
             }
     )
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientResponseDto> getById(@PathVariable Long id) {
         Client client = clientService.getById(id);

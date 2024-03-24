@@ -17,7 +17,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "parkingSpots")
+@Table(name = "parking_spots")
 @EntityListeners(AuditingEntityListener.class)
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
